@@ -3,11 +3,9 @@ name = "mainWeb2"
 main = "src/index.js"  
 compatibility_date = "2025-02-04" 
 
-
 workers_dev = false  
 route = "appleweb.ws384913.workers.dev/*" 
 
- `
 kv_namespaces = [
   { binding = "appleweb", id = "194d1b66fe8-17ab3" }
 ]
