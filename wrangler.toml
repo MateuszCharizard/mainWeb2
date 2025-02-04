@@ -1,12 +1,13 @@
 # Top-level configuration
-name = "mainWeb2"
-main = "src/index.js"
-compatibility_date = "2025-02-04"
+name = "mainWeb2" 
+main = "src/index.js"  
+compatibility_date = "2025-02-04" 
 
-workers_dev = false
-route = { pattern = "https://mainweb2.pages.dev/*", zone_name = "example.org" }
 
+workers_dev = false  
+route = "appleweb.ws384913.workers.dev/*" 
+
+ `
 kv_namespaces = [
-  { binding = "<main2>", id = "<Workers Builds - 2025-02-04 15:35 >" }
+  { binding = "appleweb", id = "194d1b66fe8-17ab3" }
 ]
-
