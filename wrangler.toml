@@ -1,5 +1,5 @@
 # Top-level configuration
-name = "mainWeb2
+name = "mainWeb2"
 main = "src/index.js"
 compatibility_date = "2025-02-04"
 
