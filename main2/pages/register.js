@@ -53,7 +53,7 @@ export default function RegisterPage() {
         <div className="mt-4 text-center">
           <p className="text-white">
             Already have an account?{' '}
-            <a href="/login" className="text-blue-500">Login</a>
+            <a href="/login" className="text-blue-500">Login Now!</a>
           </p>
         </div>
       </div>
