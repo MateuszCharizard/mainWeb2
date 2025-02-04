@@ -10,10 +10,3 @@ kv_namespaces = [
   { binding = "<main2>", id = "<Workers Builds - 2025-02-04 15:35 >" }
 ]
 
-[env.staging]
-name = "my-worker-staging"
-route = { pattern = "staging.example.org/*", zone_name = "example.org" }
-
-kv_namespaces = [
-  { binding = "<MY_NAMESPACE>", id = "<STAGING_KV_ID>" }
-]
