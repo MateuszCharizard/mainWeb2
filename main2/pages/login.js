@@ -49,7 +49,7 @@ export default function LoginPage() {
         </button>
         <div className="mt-4 text-center">
           <p className="text-white">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <a href="/register" className="text-blue-500">Register</a>
           </p>
         </div>
