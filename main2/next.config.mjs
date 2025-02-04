@@ -4,8 +4,12 @@ import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 
- if (process.env.NODE_ENV === 'development') {
-   await setupDevPlatform();
- }
+module.exports = {
+  target: 'serverless',
+  experimental: {
+    outputStandalone: true, // Standalone mode for Cloudflare workers
+  },
+};
+
 
 export default nextConfig;

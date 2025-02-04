@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint",
     "pages:build": "npx @cloudflare/next-on-pages",
@@ -14,9 +14,11 @@
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.13.7",
     "next": "^15.1.6",
+    "publish": "^0.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-hot-toast": "^2.5.1"
+    "react-hot-toast": "^2.5.1",
+    "wrangler": "^3.107.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
