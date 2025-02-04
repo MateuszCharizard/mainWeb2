@@ -1,7 +1,7 @@
 # Top-level configuration
 name = "mainWeb2
 main = "src/index.js"
-compatibility_date = "2022-07-12"
+compatibility_date = "2025-02-04"
 
 workers_dev = false
 route = { pattern = "https://mainweb2.pages.dev/*", zone_name = "example.org" }
