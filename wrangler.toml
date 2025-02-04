@@ -1,6 +1,6 @@
 # Top-level configuration
 name = "workers-playground-dry-firefly-48a9" 
-main = "/index.js"  
+main = "pages/index.js"  
 compatibility_date = "2025-02-04" 
 
 workers_dev = false  
