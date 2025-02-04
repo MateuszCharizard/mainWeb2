@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+
+/* Light theme */
+html {
+  --background-color: #f0f0f0;
+  --text-color: #333;
+  --primary-color: #4f46e5; /* Example color for buttons or highlights */
+}
+
+/* Dark theme */
+/* Light theme (default) */
+html {
+  --background-color: #f0f0f0;
+  --text-color: #333;
+  --primary-color: #4f46e5;
+}
+
+/* Dark theme */
+html.dark {
+  --background-color: #121212;
+  --text-color: #e5e5e5;
+  --primary-color: #6366f1;
+}
+
+/* Apply the variables */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--primary-color);
+  opacity: 0.8;
+}
