@@ -1,1 +1,8 @@
-{"/_app":"pages/_app.js","/_error":"pages/_error.js","/_document":"pages/_document.js","/buy":"pages/buy.html","/":"pages/index.html","/login":"pages/login.html","/order-confirmation":"pages/order-confirmation.html","/register":"pages/register.html","/404":"pages/404.html"}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/buy": "pages/buy.js",
+  "/register": "pages/register.js"
+}
