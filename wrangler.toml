@@ -1,4 +1,19 @@
-name = "main2"
-compatibility_date = "2025/02/04"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".vercel/output/static
+# Top-level configuration
+name = "mainWeb2
+main = "src/index.js"
+compatibility_date = "2022-07-12"
+
+workers_dev = false
+route = { pattern = "https://mainweb2.pages.dev/*", zone_name = "example.org" }
+
+kv_namespaces = [
+  { binding = "<main2>", id = "<Workers Builds - 2025-02-04 15:35 >" }
+]
+
+[env.staging]
+name = "my-worker-staging"
+route = { pattern = "staging.example.org/*", zone_name = "example.org" }
+
+kv_namespaces = [
+  { binding = "<MY_NAMESPACE>", id = "<STAGING_KV_ID>" }
+]
