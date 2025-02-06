@@ -20,7 +20,7 @@ const Home = () => {
 
       <footer className="bg-gray-800 py-4 text-center text-white">
         <div className="container mx-auto px-6">
-          © 2023 My Store. All rights reserved.
+          © 2025 My Store. All rights reserved.
         </div>
       </footer>
     </div>
