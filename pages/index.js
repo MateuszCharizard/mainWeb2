@@ -3,20 +3,14 @@ import { motion } from "framer-motion";
 import { toast, Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 
-const fadeInVariant = {
+const fadeInOutVariant = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, staggerChildren: 0.2, delay: 1 }
+    transition: { duration: 0.6, staggerChildren: 0.2 }
   },
-  exit: { opacity: 0, y: 20, transition: { duration: 0.4 } }
-};
-
-const textVariant = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 1 } },
-  exit: { opacity: 0, y: 30, transition: { duration: 0.4 } }
+  exit: { opacity: 0, y: 20, transition: { duration: 0.6, delay: 0.2 } }
 };
 
 const bounceVariant = {
@@ -43,7 +37,6 @@ const Index = () => {
         toast.error("Please slow down!");
         return;
       }
-
       setThemeChangeCount((count) => count + 1);
       toast.success(`Switched to ${theme} mode!`);
       setPrevTheme(theme);
@@ -58,17 +51,13 @@ const Index = () => {
   };
 
   return (
-    
-    
-    
-    
     <motion.div
       className="flex flex-col min-h-screen transition-colors duration-1000 select-none overflow-y-auto no-scrollbar transition"
       style={{ background: colors.background, color: colors.text }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      variants={fadeInOutVariant}
     >
       <Toaster position="top-center" />
       <motion.button
@@ -77,31 +66,49 @@ const Index = () => {
         style={{ background: colors.primary, color: colors.text, transition: 'background 0.5s, color 0.5s' }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        transition={{ type: "spring", stiffness: 1 }}
       >
         💡
       </motion.button>
       
       <motion.main 
         className="flex-1 flex flex-col items-center font-bold justify-center min-h-screen"
-        variants={fadeInVariant}
+        variants={fadeInOutVariant}
         initial="hidden"
         whileInView="visible"
         exit="exit"
-        viewport={{ once: false }}
+        viewport={{ once: false, amount: 0.1 }}
       >
-        <motion.h1 className="text-3xl" variants={textVariant}>
+        <motion.button
+          onClick={() => handleRedirect('/about')}
+          className="text-lg font-semibold mb-4"
+          style={{ color: colors.text }}
+          variants={bounceVariant}
+          animate="animate"
+        >
+          About Me
+        </motion.button>
+        
+        <motion.h1 className="text-3xl" variants={fadeInOutVariant}>
           Welcome to mnty.space
         </motion.h1>
+        
+        <motion.div className="mt-10 flex flex-col items-center">
+          <motion.p className="text-lg font-medium" style={{ color: colors.text }} variants={bounceVariant} animate="animate">
+            Scroll down to see my work
+          </motion.p>
+          <motion.span className="text-2xl" style={{ color: colors.text }} variants={bounceVariant} animate="animate">
+            ⬇️
+          </motion.span>
+        </motion.div>
       </motion.main>
       
       <motion.section 
         className="flex flex-col items-center justify-center min-h-screen p-16"
-        variants={fadeInVariant}
+        variants={fadeInOutVariant}
         initial="hidden"
         whileInView="visible"
         exit="exit"
-        viewport={{ once: false }}
+        viewport={{ once: false, amount: 0.1 }}
       >
         <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-20 w-full max-w-6xl">
           {[{
@@ -113,7 +120,7 @@ const Index = () => {
             title: "Schedl",
             text: "Schedule tasks with ease:",
             link: "Start Scheduling!",
-            url: "#"
+            url: "https://schedl.pro"
           }, {
             title: "BuildWebHost",
             text: "In progress...",
@@ -124,7 +131,11 @@ const Index = () => {
               key={index} 
               className="flex flex-col items-center justify-center p-10 rounded-xl shadow-lg"
               style={{ background: colors.cardBackground, color: colors.text, transition: 'background 0.5s, color 0.5s' }}
-              variants={textVariant}
+              variants={fadeInOutVariant}
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: false, amount: 0.1 }}
             >
               <motion.h2 className="text-2xl font-semibold mb-4">
                 {item.title}
