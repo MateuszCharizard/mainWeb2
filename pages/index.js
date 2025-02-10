@@ -114,7 +114,7 @@ const Index = () => {
           {[{
             title: "SchedlGym",
             text: "Schedule your gym workouts:",
-            link: "Start Now!",
+            link: "Coming Really Soon!",
             url: "#"
           }, {
             title: "Schedl",
