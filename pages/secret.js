@@ -209,7 +209,7 @@ export default function Home() {
                 onChange={(e) => setCategory(e.target.value)} 
                 className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
               >
-                <option value="">Select Category</option>
+
                 <option value="Cardio">Cardio</option>
                 <option value="Strength">Strength</option>
                 <option value="Flexibility">Flexibility</option>
