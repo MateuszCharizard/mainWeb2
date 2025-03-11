@@ -2,6 +2,7 @@ import { useTheme } from "/components/themeContext";
 import { motion } from "framer-motion";
 import { toast, Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
+import Link from 'next/link';
 
 const fadeInOutVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -115,17 +116,17 @@ const Index = () => {
             title: "SchedlGym",
             text: "Schedule your gym workouts:",
             link: "Coming Really Soon!",
-            url: "#"
+            href: "/secret"  // Use /secret as internal link
           }, {
             title: "Schedl",
             text: "Schedule tasks with ease:",
             link: "Start Scheduling!",
-            url: "https://schedl.pro"
+            url: "https://schedl.pro" // External URL
           }, {
             title: "BuildWebHost",
             text: "In progress...",
             link: "Coming Soon!",
-            url: "#"
+            url: "#" // External URL placeholder
           }].map((item, index) => (
             <motion.div 
               key={index} 
@@ -143,14 +144,22 @@ const Index = () => {
               <motion.p className="text-lg mb-6">
                 {item.text}
               </motion.p>
-              <motion.button
-                onClick={() => handleRedirect(item.url)}
-                className="text-lg font-semibold underline"
-                variants={bounceVariant}
-                animate="animate"
-              >
-                {item.link}
-              </motion.button>
+              {item.href ? (
+                // Internal link for the /secret page
+                <Link href={item.href} className="text-lg font-semibold underline">
+                  {item.link}
+                </Link>
+              ) : (
+                // External link handled by the redirect function
+                <motion.button
+                  onClick={() => handleRedirect(item.url)}
+                  className="text-lg font-semibold underline"
+                  variants={bounceVariant}
+                  animate="animate"
+                >
+                  {item.link}
+                </motion.button>
+              )}
             </motion.div>
           ))}
         </motion.div>
