@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { toast, Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const fadeInOutVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -31,6 +32,7 @@ const Index = () => {
   const [prevTheme, setPrevTheme] = useState(theme);
   const [themeChangeCount, setThemeChangeCount] = useState(0);
   const [isRateLimited, setIsRateLimited] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (prevTheme !== theme) {
@@ -44,16 +46,24 @@ const Index = () => {
     }
   }, [theme, prevTheme, isRateLimited]);
 
+  // Reset rate limit state after 3 seconds
+  useEffect(() => {
+    if (isRateLimited) {
+      const timer = setTimeout(() => setIsRateLimited(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isRateLimited]);
+
   const handleRedirect = (url) => {
     toast("Redirecting...");
     setTimeout(() => {
-      window.location.href = url;
+      router.push(url); // Use Next.js router for internal links
     }, 1000);
   };
 
   return (
     <motion.div
-      className="flex flex-col min-h-screen transition-colors duration-1000 select-none overflow-y-auto no-scrollbar transition"
+      className="flex flex-col min-h-screen w-full transition-colors duration-1000 select-none overflow-y-auto no-scrollbar transition"
       style={{ background: colors.background, color: colors.text }}
       initial="hidden"
       animate="visible"
@@ -61,15 +71,28 @@ const Index = () => {
       variants={fadeInOutVariant}
     >
       <Toaster position="top-center" />
+      
       <motion.button
-        onClick={toggleTheme}
-        className="w-10 h-10 rounded-full fixed top-4 right-4 flex items-center justify-center shadow-lg z-50"
-        style={{ background: colors.primary, color: colors.text, transition: 'background 0.5s, color 0.5s' }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        💡
-      </motion.button>
+      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+      onClick={toggleTheme}
+      className="w-10 h-10 rounded-full fixed top-4 right-4 flex items-center justify-center shadow-lg z-50"
+      style={{
+        appearance: "none",
+        padding: "1em 2em",
+        color: colors.text,
+        cursor: "pointer",
+        outline: "none",
+        borderRadius: "100px",
+        border: "2px solid transparent",
+        background: `linear-gradient(#000, #000) padding-box, radial-gradient(farthest-corner at var(--x) var(--y), #00C9A7, #845EC2) border-box`,
+        '--x': '50%', // Default position of the radial gradient center
+        '--y': '50%', // Default position of the radial gradient center
+      }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+    >
+      💡
+    </motion.button>
       
       <motion.main 
         className="flex-1 flex flex-col items-center font-bold justify-center min-h-screen"
@@ -88,11 +111,34 @@ const Index = () => {
         >
           About Me
         </motion.button>
-        
-        <motion.h1 className="text-3xl" variants={fadeInOutVariant}>
-          Welcome to mnty.space
-        </motion.h1>
-        
+
+          <h1 className="block-effect" style={{ '--td': '1.2s' }}>
+        <div
+          className="block-reveal"
+          style={{
+            '--bc': '#4040bf',
+            '--d': '.1s',
+            fontSize: '3.5rem', // Smaller font size
+            color: colors.text, // Dynamic color based on theme
+          }}
+        >
+          Welcome to
+        </div>
+        <div
+          className="block-reveal"
+          style={{
+            color: colors.text,
+            '--bc': '#bf4060',
+            '--d': '.5s',
+            fontSize: '3.5rem', // Smaller font size
+             // Dynamic color based on theme
+          }}
+        >
+          mnty.space
+        </div>
+      </h1>
+
+
         <motion.div className="mt-10 flex flex-col items-center">
           <motion.p className="text-lg font-medium" style={{ color: colors.text }} variants={bounceVariant} animate="animate">
             Scroll down to see my work
@@ -116,7 +162,7 @@ const Index = () => {
             title: "SchedlGym",
             text: "Schedule your gym workouts:",
             link: "Coming Really Soon!",
-            href: "/secret"  // Use /secret as internal link
+            href: "/secret"  // Internal link for the /secret page
           }, {
             title: "Schedl",
             text: "Schedule tasks with ease:",
@@ -145,12 +191,10 @@ const Index = () => {
                 {item.text}
               </motion.p>
               {item.href ? (
-                // Internal link for the /secret page
                 <Link href={item.href} className="text-lg font-semibold underline">
                   {item.link}
                 </Link>
               ) : (
-                // External link handled by the redirect function
                 <motion.button
                   onClick={() => handleRedirect(item.url)}
                   className="text-lg font-semibold underline"
