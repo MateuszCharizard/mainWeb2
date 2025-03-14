@@ -4,6 +4,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Image from 'next/image';  // Import Image component from next/image
 
 const fadeInOutVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -63,11 +64,11 @@ const Index = () => {
 
   return (
     <motion.div
-      className="flex flex-col min-h-screen w-full transition-colors duration-1000 select-none overflow-y-auto no-scrollbar"
+      className="flex flex-col min-h-screen w-full transition-colors duration-1000 select-none overflow-y-auto draggable-false no-scrollbar"
       style={{
         background: colors.background, // Dynamic background based on theme
         color: colors.text // Dynamic text color based on theme
-      }}
+    }}
       initial="hidden"
       animate="visible"
       exit="exit"
@@ -125,8 +126,8 @@ const Index = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        <Link href="/images">
-          📷
+        <Link href="/">
+            🏠
         </Link>
       </motion.button>
       <motion.main 
@@ -137,16 +138,6 @@ const Index = () => {
         exit="exit"
         viewport={{ once: false, amount: 0.1 }}
       >
-        <motion.button
-          onClick={() => handleRedirect('/about')}
-          className="text-lg font-semibold mb-4"
-          style={{ color: colors.text }}
-          variants={bounceVariant}
-          animate="animate"
-        >
-          About Me
-        </motion.button>
-
         <h1 className="block-effect" style={{ '--td': '1.2s' }}>
           <div
             className="block-reveal"
@@ -169,13 +160,13 @@ const Index = () => {
               // Dynamic color based on theme
             }}
           >
-            mnty.space
+            mnty Images
           </div>
         </h1>
 
         <motion.div className="mt-10 flex flex-col items-center">
           <motion.p className="text-lg font-medium" style={{ color: colors.text }} variants={bounceVariant} animate="animate">
-            Scroll down to see my work
+            Scroll down to see my images
           </motion.p>
           <motion.span className="text-2xl" style={{ color: colors.text }} variants={bounceVariant} animate="animate">
             ⬇️
@@ -183,65 +174,86 @@ const Index = () => {
         </motion.div>
       </motion.main>
       
-      <motion.section 
-        className="flex flex-col items-center justify-center min-h-screen p-16"
+      <motion.section
+  className="flex flex-col items-center justify-center min-h-screen p-16"
+  variants={fadeInOutVariant}
+  initial="hidden"
+  whileInView="visible"
+  exit="exit"
+  viewport={{ once: false, amount: 0.1 }}
+>
+    <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-20 w-full max-w-6xl">
+        {/* First Image */}
+        <motion.div
+        className="flex flex-col items-center justify-center p-10 rounded-xl shadow-lg"
+        style={{
+            background: colors.cardBackground,
+            color: colors.text,
+            transition: 'background 0.5s, color 0.5s',
+        }}
         variants={fadeInOutVariant}
         initial="hidden"
         whileInView="visible"
         exit="exit"
         viewport={{ once: false, amount: 0.1 }}
-      >
-        <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-20 w-full max-w-6xl">
-          {[{
-            title: "SchedlGym",
-            text: "Schedule your gym workouts:",
-            link: "Coming Really Soon!",
-            href: "/secret"  // Internal link for the /secret page
-          }, {
-            title: "Schedl",
-            text: "Schedule tasks with ease:",
-            link: "Start Scheduling!",
-            url: "https://schedl.pro" // External URL
-          }, {
-            title: "BuildWebHost",
-            text: "In progress...",
-            link: "Coming Soon!",
-            url: "#" // External URL placeholder
-          }].map((item, index) => (
-            <motion.div 
-              key={index} 
-              className="flex flex-col items-center justify-center p-10 rounded-xl shadow-lg"
-              style={{ background: colors.cardBackground, color: colors.text, transition: 'background 0.5s, color 0.5s' }}
-              variants={fadeInOutVariant}
-              initial="hidden"
-              whileInView="visible"
-              exit="exit"
-              viewport={{ once: false, amount: 0.1 }}
-            >
-              <motion.h2 className="text-2xl font-semibold mb-4">
-                {item.title}
-              </motion.h2>
-              <motion.p className="text-lg mb-6">
-                {item.text}
-              </motion.p>
-              {item.href ? (
-                <Link href={item.href} className="text-lg font-semibold underline">
-                  {item.link}
-                </Link>
-              ) : (
-                <motion.button
-                  onClick={() => handleRedirect(item.url)}
-                  className="text-lg font-semibold underline"
-                  variants={bounceVariant}
-                  animate="animate"
-                >
-                  {item.link}
-                </motion.button>
-              )}
-            </motion.div>
-          ))}
+        >
+        <Image
+            src="/wallpaperbetter.jpg"
+            alt="Weston-super-mare"
+            width={960}
+            height={540}
+            objectFit="cover"
+        />
         </motion.div>
-      </motion.section>
+
+        {/* Second Image */}
+        <motion.div
+        className="flex flex-col items-center justify-center p-10 rounded-xl shadow-lg"
+        style={{
+            background: colors.cardBackground,
+            color: colors.text,
+            transition: 'background 0.5s, color 0.5s',
+        }}
+        variants={fadeInOutVariant}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.1 }}
+        >
+        <Image
+            src="/weston-super-mare-3840x2400.jpg"
+            alt="Weston-super-mare"
+            width={960}
+            height={540}
+            objectFit="cover"
+        />
+        </motion.div>
+
+        {/* Third Image (if you need another image, repeat the same structure) */}
+        <motion.div
+        className="flex flex-col items-center justify-center p-10 rounded-xl shadow-lg"
+        style={{
+            background: colors.cardBackground,
+            color: colors.text,
+            transition: 'background 0.5s, color 0.5s',
+        }}
+        variants={fadeInOutVariant}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.1 }}
+        >
+        <Image
+            src="/weston-super-mare-3840x2400.jpg" // Replace this with another image if you need
+            alt="Weston-super-mare"
+            width={960}
+            height={540}
+            objectFit="cover"
+        />
+        </motion.div>
+    </motion.div>
+    </motion.section>
+
       
       <footer className="fixed bottom-0 text-center p-2 font-semibold">
         Ⓒ 2025 Mnty
