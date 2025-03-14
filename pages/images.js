@@ -1,5 +1,5 @@
 import { useTheme } from "/components/themeContext";
-import { motion } from "framer-motion";
+import { motion, px } from "framer-motion";
 import { toast, Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
@@ -130,6 +130,8 @@ const Index = () => {
             🏠
         </Link>
       </motion.button>
+      
+      
       <motion.main 
         className="flex-1 flex flex-col items-center font-bold justify-center min-h-screen"
         variants={fadeInOutVariant}
@@ -138,6 +140,17 @@ const Index = () => {
         exit="exit"
         viewport={{ once: false, amount: 0.1 }}
       >
+        <Image
+            className="flex flex-col items-center font-bold justify-center animate-spin "
+            variants={fadeInOutVariant}
+            src="/CD-1 (1).webp"
+            alt="Weston-super-mare"
+            width={500}
+            height={500}
+        
+            
+        />
+        
         <h1 className="block-effect" style={{ '--td': '1.2s' }}>
           <div
             className="block-reveal"
