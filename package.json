@@ -4,15 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "ls -la && pwd",
+    "prebuild": "ls -la && pwd", 
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx" 
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
-    "@react-three/drei": "^10.0.4",
-    "@react-three/fiber": "^9.1.0",
+    "@react-three/drei": "^9.114.0", 
+    "@react-three/fiber": "^8.17.10", 
     "axios": "^1.8.3",
     "framer-motion": "^12.5.0",
     "latest": "^0.2.0",
