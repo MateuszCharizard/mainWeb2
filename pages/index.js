@@ -105,7 +105,7 @@ const Index = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        💡
+        🌘
       </motion.button>
       <motion.button
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
@@ -125,32 +125,11 @@ const Index = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        <Link href="/images">
-          📷
-        </Link>
-      </motion.button>
-      <motion.button
-        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-        className="absolute top-4 inset-x-0 mx-auto w-10 h-10 rounded-full flex items-center justify-center shadow-lg z-50"
-        style={{
-          appearance: "none",
-          padding: "1em 2em",
-          color: colors.text,
-          cursor: "pointer",
-          outline: "none",
-          borderRadius: "100px",
-          border: "2px solid transparent",
-          background: `linear-gradient(#000, #000) padding-box, radial-gradient(farthest-corner at var(--x) var(--y), #00C9A7, #845EC2) border-box`,
-          '--x': '50%', // Default position of the radial gradient center
-          '--y': '50%', // Default position of the radial gradient center
-        }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
         <Link href="/music">
-          📷
+          🎵
         </Link>
       </motion.button>
+      
 
 
 

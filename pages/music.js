@@ -144,8 +144,6 @@ const Index = () => {
             alt="Weston-super-mare"
             width={500}
             height={500}
-        
-            
         />
         
         <h1 className="block-effect" style={{ '--td': '1.2s' }}>
