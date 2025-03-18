@@ -12,7 +12,7 @@ const fadeInOutVariant = {
     y: 0,
     transition: { duration: 0.6, staggerChildren: 0.2 }
   },
-  exit: { opacity: 0, y: 20, transition: { duration: 0.6, delay: 0.2 } }
+  exit: { opacity: 0, y: 20, transition: { duration: 1, delay: 0.4 } }
 };
 
 const bounceVariant = {
@@ -71,7 +71,7 @@ const Index = () => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      variants={fadeInOutVariant}
+      
     >
       {/* This will apply a global background to the entire page */}
       <style jsx global>{`
@@ -239,7 +239,6 @@ const Index = () => {
               variants={fadeInOutVariant}
               initial="hidden"
               whileInView="visible"
-              exit="exit"
               viewport={{ once: false, amount: 0.1 }}
             >
               <motion.h2 className="text-2xl font-semibold mb-4">
