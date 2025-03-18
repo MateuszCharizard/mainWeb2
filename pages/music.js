@@ -105,7 +105,7 @@ const Index = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        💡
+        🌘
       </motion.button>
       <motion.button
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
@@ -138,41 +138,59 @@ const Index = () => {
         exit="exit"
         viewport={{ once: false, amount: 0.1 }}
       >
-        <Image
-            className="flex flex-col items-center font-bold justify-center animate-spin "
-            src="/CD.jpg"
-            alt="Weston-super-mare"
-            width={500}
-            height={500}
-        />
-        
-        <h1 className="block-effect" style={{ '--td': '1.2s' }}>
-          <div
-            className="block-reveal"
-            style={{
-              '--bc': '#4040bf',
-              '--d': '.1s',
-              fontSize: '3.5rem', // Smaller font size
-              color: colors.text, // Dynamic color based on theme
-            }}
-            variants={fadeInOutVariant}
-          >
-            Welcome to
-          </div>
-          <div
-            className="block-reveal"
-            style={{
-              color: colors.text,
-              '--bc': '#bf4060',
-              '--d': '.5s',
-              fontSize: '3.5rem', // Smaller font size
-              // Dynamic color based on theme
-            }}
-            variants={fadeInOutVariant}
-          >
-            mnty Images
-          </div>
-        </h1>
+<div className="relative flex justify-center items-center">
+          <Image
+            className="flex flex-col items-center justify-center"
+            src="/WhatsApp_Image_2025-03-18_at_17.09.28_5df25a50-removebg-preview.png"
+            alt="CD"
+            width={130}
+            height={100}
+          />
+          <Image
+            className={`absolute flex flex-col items-center justify-center ${theme === 'dark' ? 'invert' : ''}`}
+            src="/WhatsApp_Image_2025-03-18_at_19.19.01_6ebc38d7-removebg-preview.png"
+            alt="matix"
+            width={1600}
+            height={600}
+            style={{ width: '600px', height: '600px', maxWidth: 'none', maxHeight: 'none' }}
+          />
+</div>
+
+
+
+<h1 className="block-effect" style={{ '--td': '1.2s' }}>
+  <div
+    className="block-reveal"
+    style={{
+      '--bc': '#4040bf',
+      '--d': '.1s',
+      fontSize: '3.5rem', // Smaller font size
+      color: theme === 'dark' ? 'white' : 'black', // Set to white in dark mode, black in light mode
+      animation: 'none', // Disable any animation that might override the color
+    }}
+    variants={fadeInOutVariant}
+  >
+    Welcome to
+  </div>
+  <div
+    className="block-reveal"
+    style={{
+      color: theme === 'dark' ? 'white' : colors.text, // Set to white in dark mode, or dynamic text color in light mode
+      '--bc': '#bf4060',
+      '--d': '.5s',
+      fontSize: '3.5rem', // Smaller font size
+      animation: 'none', // Disable any animation that might override the color
+    }}
+    variants={fadeInOutVariant}
+  >
+    mnty music
+  </div>
+</h1>
+
+
+
+
+
 
         <motion.div className="mt-10 flex flex-col items-center">
           <motion.p className="text-lg font-medium" style={{ color: colors.text }} variants={bounceVariant} animate="animate">
