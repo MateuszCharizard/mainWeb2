@@ -143,7 +143,7 @@ const Index = () => {
         <Image
             className="flex flex-col items-center font-bold justify-center animate-spin "
             variants={fadeInOutVariant}
-            src="/CD-1 (1).webp"
+            src="/CD.jpg"
             alt="Weston-super-mare"
             width={500}
             height={500}
