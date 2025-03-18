@@ -72,7 +72,6 @@ const Index = () => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      variants={fadeInOutVariant}
     >
       {/* This will apply a global background to the entire page */}
       <style jsx global>{`
@@ -134,7 +133,6 @@ const Index = () => {
       
       <motion.main 
         className="flex-1 flex flex-col items-center font-bold justify-center min-h-screen"
-        variants={fadeInOutVariant}
         initial="hidden"
         whileInView="visible"
         exit="exit"
@@ -142,7 +140,6 @@ const Index = () => {
       >
         <Image
             className="flex flex-col items-center font-bold justify-center animate-spin "
-            variants={fadeInOutVariant}
             src="/CD.jpg"
             alt="Weston-super-mare"
             width={500}
@@ -160,6 +157,7 @@ const Index = () => {
               fontSize: '3.5rem', // Smaller font size
               color: colors.text, // Dynamic color based on theme
             }}
+            variants={fadeInOutVariant}
           >
             Welcome to
           </div>
@@ -172,6 +170,7 @@ const Index = () => {
               fontSize: '3.5rem', // Smaller font size
               // Dynamic color based on theme
             }}
+            variants={fadeInOutVariant}
           >
             mnty Images
           </div>
@@ -188,13 +187,12 @@ const Index = () => {
       </motion.main>
       
       <motion.section
-  className="flex flex-col items-center justify-center min-h-screen p-16"
-  variants={fadeInOutVariant}
-  initial="hidden"
-  whileInView="visible"
-  exit="exit"
-  viewport={{ once: false, amount: 0.1 }}
->
+            className="flex flex-col items-center justify-center min-h-screen p-16"
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: false, amount: 0.1 }}
+            >
     <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-20 w-full max-w-6xl">
         {/* First Image */}
         <motion.div
@@ -210,7 +208,6 @@ const Index = () => {
             '--x': '50%', // Default position of the radial gradient center
             '--y': '50%', // Default position of the radial gradient center 
         }}
-        variants={fadeInOutVariant}
         initial="hidden"
         whileInView="visible"
         exit="exit"
@@ -233,7 +230,6 @@ const Index = () => {
             '--x': '50%', // Default position of the radial gradient center
             '--y': '50%', // Default position of the radial gradient center 
         }}
-        variants={fadeInOutVariant}
         initial="hidden"
         whileInView="visible"
         exit="exit"
@@ -256,7 +252,6 @@ const Index = () => {
             '--x': '50%', // Default position of the radial gradient center
             '--y': '50%', // Default position of the radial gradient center 
         }}
-        variants={fadeInOutVariant}
         initial="hidden"
         whileInView="visible"
         exit="exit"
