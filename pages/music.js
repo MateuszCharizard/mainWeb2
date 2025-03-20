@@ -229,7 +229,7 @@ const Index = () => {
         exit="exit"
         viewport={{ once: false, amount: 0.1 }}
         >
-         <iframe className="rounded-lg" width="300" height="120" src="https://www.bandlab.com/embed/?id=aa13801c-5504-f011-aaa7-0022484892d6" allowfullscreen></iframe>
+         <iframe className="rounded-lg" width="300" height="120" src="https://www.bandlab.com/embed/?id=26bc8ef9-2705-f011-aaa7-0022484892d6" allowfullscreen></iframe>
         </motion.div>
 
         {/* Second Image */}
@@ -251,7 +251,7 @@ const Index = () => {
         exit="exit"
         viewport={{ once: false, amount: 0.1 }}
         >
-         <iframe className="rounded-lg" width="300" height="120" src="https://www.bandlab.com/embed/?id=927a5f5e-5504-f011-aaa7-0022484892d6" allowfullscreen></iframe>
+         <iframe className="rounded-lg" width="300" height="120" src="https://www.bandlab.com/embed/?id=5cbad79f-2705-f011-aaa7-0022484892d6" allowfullscreen></iframe>
         </motion.div>
 
         {/* Third Image (if you need another image, repeat the same structure) */}
