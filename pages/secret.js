@@ -1,288 +1,343 @@
+// pages/index.jsx
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Toaster, toast } from 'react-hot-toast';
-import { Line } from 'react-chartjs-2';
-import { Moon, Sun, PlusCircle, Trash2, Menu } from 'lucide-react';
-import { Combobox } from '@headlessui/react'; // For searchable dropdown
+import { motion, AnimatePresence } from 'framer-motion';
+import Head from 'next/head';
+import Link from 'next/link';
 
-export default function Home() {
-  const [darkMode, setDarkMode] = useState(true);
-  const [workouts, setWorkouts] = useState([]);
-  const [workout, setWorkout] = useState('');
-  const [date, setDate] = useState('');
-  const [weight, setWeight] = useState('');
-  const [category, setCategory] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [goal, setGoal] = useState(null);
+const Home = () => {
+  const [isDark, setIsDark] = useState(true);
+  const [currentSuggestion, setCurrentSuggestion] = useState(0);
+  const [taskInput, setTaskInput] = useState('');
+  const [isHovered, setIsHovered] = useState(false);
 
-  const [food, setFood] = useState('');
-  const [calories, setCalories] = useState('');
-  const [proteins, setProteins] = useState('');
-  const [dailyIntake, setDailyIntake] = useState({ calories: 0, proteins: 0 });
-  const [dayHistory, setDayHistory] = useState([]);
-  const [todayDate, setTodayDate] = useState('');
-
-  // Predefined list of workout names
-  const workoutOptions = [
-    'Push-ups', 'Squats', 'Deadlifts', 'Pull-ups', 'Lunges', 'Bench Press', 
-    'Running', 'Cycling', 'Jump Rope', 'Yoga', 'Plank', 'Mountain Climbers', 
-    'Burpees', 'Kettlebell Swing', 'Box Jumps', 'Dumbbell Rows', 'Leg Press', 
-    'Overhead Press', 'Bicep Curls', 'Tricep Dips', 'Crunches', 'Leg Raises', 
-    'Russian Twists', 'Chest Fly', 'Glute Bridges', 'Step-ups', 'High Knees', 
-    'Treadmill Sprints', 'Barbell Squat', 'Lateral Raises', 'Push Press', 'Treadmill Walk'
+  const suggestions = [
+    "Plan your next meeting",
+    "Track project deadlines",
+    "Sync with your team",
+    "Organize daily goals",
+    "Schedule a review"
   ];
 
   useEffect(() => {
-    const savedWorkouts = JSON.parse(localStorage.getItem('workouts'));
-    if (savedWorkouts) setWorkouts(savedWorkouts);
-
-    const savedGoal = JSON.parse(localStorage.getItem('goal'));
-    if (savedGoal) setGoal(savedGoal);
-
-    // Get today's date for calorie reset
-    const currentDate = new Date().toISOString().split('T')[0];
-    setTodayDate(currentDate);
-
-    const savedDayHistory = JSON.parse(localStorage.getItem('dayHistory')) || [];
-    setDayHistory(savedDayHistory);
+    const interval = setInterval(() => {
+      setCurrentSuggestion((prev) => (prev + 1) % suggestions.length);
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('workouts', JSON.stringify(workouts));
-    localStorage.setItem('goal', JSON.stringify(goal));
-    localStorage.setItem('dayHistory', JSON.stringify(dayHistory));
-  }, [workouts, goal, dayHistory]);
+  const toggleTheme = () => setIsDark(!isDark);
 
-  const addWorkout = (e) => {
+  const handleTaskSubmit = (e) => {
     e.preventDefault();
-    if (!workout || !date || !weight || !category) return;
-
-    const newWorkout = { workout, date, weight, category };
-    setWorkouts([...workouts, newWorkout]);
-    toast.success('Workout added!');
-    setWorkout(''); setDate(''); setWeight(''); setCategory('');
-  };
-
-  const removeWorkout = (index) => {
-    setWorkouts(workouts.filter((_, i) => i !== index));
-    toast.error('Workout removed');
-  };
-
-  const weightData = {
-    labels: workouts.map((item) => item.date),
-    datasets: [{
-      label: 'Weight Progress',
-      data: workouts.map((item) => parseFloat(item.weight)),
-      borderColor: '#4CAF50',
-      tension: 0.3,
-    }],
-  };
-
-  const filteredWorkouts = workouts.filter(workout =>
-    workout.workout.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    workout.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleGoalChange = (e) => {
-    const newGoal = { ...goal, target: e.target.value };
-    setGoal(newGoal);
-    localStorage.setItem('goal', JSON.stringify(newGoal));
-  };
-
-  const handleAddFood = () => {
-    if (!food || !calories || !proteins) {
-      toast.error('Please enter food details');
-      return;
+    if (taskInput.trim()) {
+      setTaskInput('');
+      // Task handling logic here
     }
-
-    const foodItem = { food, calories: parseFloat(calories), proteins: parseFloat(proteins) };
-    
-    // Update daily intake
-    setDailyIntake(prev => ({
-      calories: prev.calories + foodItem.calories,
-      proteins: prev.proteins + foodItem.proteins
-    }));
-
-    // Add food to today's history
-    const newHistory = {
-      date: todayDate,
-      foodItems: [...(dayHistory.filter(day => day.date === todayDate).map(day => day.foodItems).flat() || []), foodItem],
-    };
-
-    // Update the history with today's food
-    setDayHistory(prev => {
-      const filteredHistory = prev.filter(day => day.date !== todayDate);
-      return [...filteredHistory, newHistory];
-    });
-
-    // Reset food input fields
-    setFood('');
-    setCalories('');
-    setProteins('');
-    toast.success('Food item added!');
   };
 
-  const resetDailyIntake = () => {
-    setDailyIntake({ calories: 0, proteins: 0 });
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 150, damping: 15 } },
+  };
+
+  const glowVariants = {
+    hover: {
+      scale: 1.06,
+      boxShadow: [
+        "0 0 8px rgba(59, 130, 246, 0.8)",
+        "0 0 20px rgba(59, 130, 246, 0.6)",
+        "0 0 40px rgba(59, 130, 246, 0.4)"
+      ].join(','),
+      transition: { duration: 0.3 },
+    },
+    tap: { scale: 0.97 },
+  };
+
+  const titleVariants = {
+    hover: { y: -8, color: '#60a5fa', transition: { type: 'spring', stiffness: 500, damping: 20 } },
+  };
+
+  const suggestionVariants = {
+    initial: { opacity: 0, y: 15, scale: 0.95 },
+    animate: { opacity: 1, y: 0, scale: 1 },
+    exit: { opacity: 0, y: -15, scale: 0.95 },
   };
 
   return (
-    <div className={`min-h-screen flex bg-gray-950 text-white transition-all`}>
-      <Toaster position="top-center" />
+    <>
+      <Head>
+        <title>Schedl - Next-Level Scheduling</title>
+        <meta name="description" content="Experience the future of productivity with Schedl's intelligent scheduling platform." />
+        <link rel="icon" href="https://i.snipp.gg/527450380389318667/4625d74623760414a9751881a96a1a5c.png" />
+      </Head>
 
-      {/* Sidebar */}
-      <motion.div 
-        initial={{ x: -250 }} 
-        animate={{ x: sidebarOpen ? 0 : -250 }} 
-        transition={{ duration: 0.3 }}
-        className="w-64 h-full bg-gray-900 p-6 fixed top-0 left-0 flex flex-col space-y-4 shadow-lg"
-      >
-        <button onClick={() => setSidebarOpen(false)} className="self-end text-gray-400">✖</button>
-        <h2 className="text-xl font-semibold">Settings</h2>
-        <button 
-          className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 flex items-center gap-2" 
-          onClick={() => setDarkMode(!darkMode)}
+      <div className={`min-h-screen ${isDark ? 'bg-gradient-to-br from-[#0a0f1a] via-[#1a2338] to-[#2a3555]' : 'bg-gradient-to-br from-blue-50 via-white to-indigo-50'} 
+        transition-all duration-1000 overflow-x-hidden font-sans relative`}>
+        
+        {/* Background Particles */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          animate={{ opacity: isDark ? 0.15 : 0.05 }}
+          transition={{ duration: 1 }}
         >
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />} Toggle Theme
-        </button>
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute bg-blue-400/30 rounded-full"
+              style={{
+                width: Math.random() * 4 + 2,
+                height: Math.random() * 4 + 2,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: Math.random() * 3 + 2,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </motion.div>
 
-        {/* Goal Setting */}
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold">Set Your Goal</h3>
-          <input 
-            type="number" 
-            placeholder="Target Weight (kg)" 
-            value={goal ? goal.target : ''} 
-            onChange={handleGoalChange}
-            className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-        </div>
-      </motion.div>
-
-      {/* Main Content */}
-      <div className="flex-1 p-6 max-w-screen-lg mx-auto flex space-x-6">
-        {/* Left Section: Workouts */}
-        <div className="flex-1">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Track Your Workouts</h2>
-            <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-full bg-gray-800 hover:bg-gray-700">
-              <Menu size={24} />
-            </button>
+        {/* Header */}
+        <motion.header
+          className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-6 backdrop-blur-md bg-opacity-80"
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
+          <motion.span className="text-xl font-semibold bg-gradient-to-r from-blue-400 to-indigo-600 bg-clip-text text-transparent">
+            Schedl
+          </motion.span>
+          <div className="flex items-center space-x-4">
+            <motion.button
+              variants={glowVariants}
+              whileHover="hover"
+              whileTap="tap"
+              onClick={toggleTheme}
+              className={`p-2.5 rounded-full ${isDark ? 'bg-gray-900/50' : 'bg-gray-100/50'} shadow-xl backdrop-blur-sm`}
+            >
+              <motion.img
+                src={isDark ? "https://img.icons8.com/ios-filled/50/ffffff/sun.png" : "https://img.icons8.com/ios-filled/50/000000/moon-symbol.png"}
+                alt="Theme toggle"
+                width={24}
+                height={24}
+                className={isDark ? 'invert' : ''}
+                animate={{ rotate: isDark ? 360 : 0 }}
+                transition={{ duration: 0.6 }}
+              />
+            </motion.button>
+            <Link href="/login">
+              <motion.button
+                variants={glowVariants}
+                whileHover="hover"
+                whileTap="tap"
+                className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full font-medium text-white shadow-xl"
+              >
+                Get Started
+              </motion.button>
+            </Link>
           </div>
+        </motion.header>
 
-          <motion.form onSubmit={addWorkout} className="bg-gray-900 p-6 rounded-xl shadow-lg">
-            <div className="space-y-4">
-              {/* Workout selection */}
-              <Combobox value={workout} onChange={setWorkout}>
-                <Combobox.Input
-                  className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search workouts"
+        {/* Hero Section */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="min-h-screen flex items-center justify-center px-4 md:px-8 pt-24 pb-16"
+        >
+          <div className="text-center max-w-5xl mx-auto relative z-10">
+            <motion.h1
+              className="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-12 tracking-tight"
+              variants={itemVariants}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {['S', 'c', 'h', 'e', 'd', 'l', '.', 'P', 'r', 'o'].map((letter, index) => (
+                <motion.span
+                  key={index}
+                  variants={titleVariants}
+                  whileHover="hover"
+                  className={`${letter === '.' ? 'bg-gradient-to-r from-blue-400 to-indigo-600 bg-clip-text text-transparent' : ''} inline-block`}
+                >
+                  {letter}
+                </motion.span>
+              ))}
+            </motion.h1>
+
+            <motion.p
+              variants={itemVariants}
+              className={`text-xl md:text-2xl lg:text-3xl mb-12 font-light max-w-3xl mx-auto leading-relaxed ${isDark ? 'text-white' : 'text-black'}`}
+            >
+              Redefine productivity with intelligent scheduling
+            </motion.p>
+
+            {/* Task Input */}
+            <motion.form
+              variants={itemVariants}
+              onSubmit={handleTaskSubmit}
+              className="max-w-2xl mx-auto flex gap-4 items-center relative"
+            >
+              <motion.input
+                type="text"
+                value={taskInput}
+                onChange={(e) => setTaskInput(e.target.value)}
+                placeholder={suggestions[currentSuggestion]}
+                className={`flex-1 p-4 md:p-5 rounded-2xl ${isDark ? 'bg-gray-900/70 text-white' : 'bg-white/70 text-gray-900'} 
+                  border ${isDark ? 'border-gray-800' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-blue-400 
+                  backdrop-blur-md shadow-lg`}
+                whileFocus={{ scale: 1.03, boxShadow: '0 0 15 patienterpx rgba(59, 130, 246, 0.3)' }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.button
+                variants={glowVariants}
+                whileHover="hover"
+                whileTap="tap"
+                type="submit"
+                className="px-8 py-4 md:py-5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 rounded-2xl font-medium text-white shadow-xl"
+              >
+                Add Task
+              </motion.button>
+            </motion.form>
+
+            {/* Task Suggestions and Scroll Arrow Container */}
+            <div className="mt-8 relative">
+              <motion.div variants={itemVariants} className="text-sm md:text-base text-gray-400/80">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={currentSuggestion}
+                    variants={suggestionVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5, ease: 'easeInOut' }}
+                    className="inline-block bg-gray-800/20 px-3 py-1 rounded-full backdrop-blur-sm"
+                  >
+                    {suggestions[currentSuggestion]}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.div>
+
+              {/* Scroll Indicator */}
+              <motion.div
+                className="mt-6 flex justify-center"
+                animate={{ y: [0, 20, 0], opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <motion.img
+                  src="https://img.icons8.com/ios-filled/50/000000/down.png"
+                  alt="Scroll down"
+                  width={32}
+                  height={32}
+                  className={isDark ? 'invert' : 'opacity-60'}
+                  animate={{ rotate: isHovered ? 360 : 0 }}
+                  transition={{ duration: 1 }}
                 />
-                <Combobox.Options>
-                  {workoutOptions.filter(option => option.toLowerCase().includes(searchTerm.toLowerCase())).map((option, index) => (
-                    <Combobox.Option key={index} value={option}>
-                      {({ active }) => (
-                        <div className={`p-3 ${active ? 'bg-gray-600' : ''}`}>{option}</div>
-                      )}
-                    </Combobox.Option>
-                  ))}
-                </Combobox.Options>
-              </Combobox>
-
-              <input 
-                type="date" 
-                value={date} 
-                onChange={(e) => setDate(e.target.value)}
-                className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500" 
-              />
-              <input 
-                type="number" 
-                placeholder="Weight (kg/lbs)" 
-                value={weight} 
-                onChange={(e) => setWeight(e.target.value)} 
-                className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500" 
-              />
-              <select 
-                value={category} 
-                onChange={(e) => setCategory(e.target.value)} 
-                className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-              >
-
-                <option value="Cardio">Cardio</option>
-                <option value="Strength">Strength</option>
-                <option value="Flexibility">Flexibility</option>
-              </select>
+              </motion.div>
             </div>
-
-            <button className="w-full py-3 mt-4 flex items-center justify-center bg-green-500 rounded-md hover:bg-green-600">
-              <PlusCircle size={20} className="mr-2" /> Add Workout
-            </button>
-          </motion.form>
-        </div>
-
-        {/* Right Section: Calorie Tracker */}
-        <div className="w-1/3 bg-gray-900 p-6 rounded-xl shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4">Calorie Tracker</h2>
-          
-          <div>
-            <input 
-              type="text" 
-              placeholder="Food Name" 
-              value={food} 
-              onChange={(e) => setFood(e.target.value)} 
-              className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500" 
-            />
-            <input 
-              type="number" 
-              placeholder="Calories" 
-              value={calories} 
-              onChange={(e) => setCalories(e.target.value)} 
-              className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 mt-2" 
-            />
-            <input 
-              type="number" 
-              placeholder="Proteins" 
-              value={proteins} 
-              onChange={(e) => setProteins(e.target.value)} 
-              className="w-full p-3 rounded-md bg-gray-800 border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 mt-2" 
-            />
           </div>
+        </motion.section>
 
-          <button 
-            onClick={handleAddFood} 
-            className="w-full py-3 mt-4 flex items-center justify-center bg-green-500 rounded-md hover:bg-green-600"
-          >
-            <PlusCircle size={20} className="mr-2" /> Add Food
-          </button>
-
-          <div className="mt-6">
-            <div className="text-lg font-semibold">Today's Intake</div>
-            <div className="mt-2 text-sm">Calories: {dailyIntake.calories} kcal</div>
-            <div className="mt-1 text-sm">Proteins: {dailyIntake.proteins} g</div>
-            <button 
-              onClick={resetDailyIntake} 
-              className="mt-4 w-full py-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200"
-              >
-              Reset Today's Intake
-            </button>
-
+        {/* Features Section */}
+        <motion.section
+          className="py-28 px-4 md:px-8 relative"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
+          <div className="max-w-5xl mx-auto text-center relative z-10">
+            <motion.h2
+              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 bg-clip-text text-transparent"
+              whileHover={{ scale: 1.04 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              Master Your Time
+            </motion.h2>
+            <motion.p
+              className={`text-lg md:text-xl lg:text-2xl font-light leading-relaxed max-w-3xl mx-auto ${isDark ? 'text-white' : 'text-black'}`}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+            >
+              Schedl empowers you with a sleek, futuristic platform to manage meetings, tasks, and workflows effortlessly.
+            </motion.p>
           </div>
+        </motion.section>
 
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold">Day History</h3>
-            {dayHistory.map((day, index) => (
-              <div key={index} className="mt-2">
-                <div className="text-sm font-semibold">{day.date}</div>
-                {day.foodItems.map((item, idx) => (
-                  <div key={idx} className="text-sm">{item.food} - {item.calories} kcal, {item.proteins} g</div>
-                ))}
-              </div>
-            ))}
+        {/* Footer */}
+        <motion.footer
+          className="py-10 px-4 backdrop-blur-lg border-t border-gray-800/30 relative z-10"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="max-w-5xl mx-auto text-center">
+            <p className={`text-sm md:text-base ${isDark ? 'text-white' : 'text-black'}`}>
+              © 2025{' '}
+              <Link href="/secret-page">
+                <motion.span
+                  whileHover={{ color: '#60a5fa' }}
+                  className={`font-medium ${isDark ? 'text-white' : 'text-black'}`}
+                >
+                  Schedl.pro
+                </motion.span>
+              </Link>
+              . All rights reserved.
+            </p>
+            <div className="mt-6 flex justify-center gap-10 text-sm md:text-base">
+              <Link href="/contact">
+                <motion.span
+                  whileHover={{ y: -4, color: '#60a5fa' }}
+                  transition={{ type: 'spring', stiffness: 400 }}
+                  className={`relative ${isDark ? 'text-white' : 'text-black'}`}
+                >
+                  Contact Us
+                  <motion.span
+                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-400"
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.span>
+              </Link>
+              <Link href="/terms">
+                <motion.span
+                  whileHover={{ y: -4, color: '#60a5fa' }}
+                  transition={{ type: 'spring', stiffness: 400 }}
+                  className={`relative ${isDark ? 'text-white' : 'text-black'}`}
+                >
+                  Terms
+                  <motion.span
+                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-400"
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.span>
+              </Link>
+            </div>
           </div>
-        </div>
+        </motion.footer>
       </div>
-    </div>
+    </>
   );
-}
+};
+
+export default Home;
