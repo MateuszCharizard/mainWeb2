@@ -423,7 +423,7 @@ const Index = () => {
                 className="rounded-lg" 
                 width="100%" 
                 height="120" 
-                src="https://www.bandlab.com/embed/?id=ce1b7ae5-2646-f011-8f7d-6045bd381261" 
+                src="https://www.bandlab.com/embed/?id=89061b4d-5046-f011-8f7d-6045bd381261" 
                 allowFullScreen
                 style={{ maxWidth: '100%' }}
               ></iframe>
