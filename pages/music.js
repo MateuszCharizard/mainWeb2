@@ -525,7 +525,7 @@ const Index = () => {
           initial="initial"
           whileHover="hover"
         >
-          <span>NEW MUSIC RELEASED - MK MK</span>
+          <span>NEW MUSIC RELEASED - Out of luck</span>
           <motion.button
             className="news-button home-button"
             onClick={() => handleRedirect('/')}
@@ -606,7 +606,7 @@ const Index = () => {
 
         <motion.div className="mt-6 flex flex-col items-center">
           <motion.p className="text-sm font-bold bounce" style={{ color: '#FFD700', textShadow: '1px 1px #000' }} variants={bounceVariant} animate="animate">
-            SCROLL FOR WORK ⭐
+            SCROLL FOR MUUUUSIC ⭐
           </motion.p>
           <motion.span className="text-lg bounce" style={{ color: '#FFFFFF', textShadow: '1px 1px #000' }} variants={bounceVariant} animate="animate">
             ⬇️
@@ -636,7 +636,7 @@ const Index = () => {
               className="rounded-lg" 
               width="100%" 
               height="120" 
-              src="https://www.bandlab.com/embed/?id=4ebac4d1-a411-f011-aaa7-0022484892d6" 
+              src="https://www.bandlab.com/embed/?id=49571d67-2373-f011-b480-000d3aa44c65" 
               allowFullScreen
               style={{ maxWidth: '100%' }}
             ></iframe>

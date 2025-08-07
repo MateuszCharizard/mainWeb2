@@ -472,7 +472,7 @@ const Index = () => {
           initial="initial"
           whileHover="hover"
         >
-          <span>NEW MUSIC RELEASED - MK MK</span>
+          <span>NEW MUSIC RELEASED - Out of luck</span>
           <motion.button
             className="news-button"
             onClick={() => handleRedirect('/music')}
@@ -526,7 +526,7 @@ const Index = () => {
             }}
             variants={fadeInOutVariant}
           >
-            MNTY MUSIC 🔥
+            MNTY.SPACE 🔥
           </div>
         </h1>
 
@@ -560,7 +560,7 @@ const Index = () => {
           >
             <h2 className="text-sm font-bold mb-2">GAMBLEIT.SITE</h2>
             <p className="text-xs font-bold mb-3">DPDD CREW HUB 🍄</p>
-            <Link href="#" className="text-xs font-bold">
+            <Link href="https://gambleit.site" className="text-xs font-bold">
               GO NOW! 🔥
             </Link>
           </motion.div>
@@ -575,12 +575,9 @@ const Index = () => {
           >
             <h2 className="text-sm font-bold mb-2">SCHEDL.PRO</h2>
             <p className="text-xs font-bold mb-3">PLAN LIKE MARIO ⭐</p>
-            <button 
-              className="text-xs font-bold"
-              onClick={() => handleRedirect('#')}
-            >
+            <Link href="https://schedl.pro" className="text-xs font-bold">
               SCHEDULE IT! 🔥
-            </button>
+            </Link>
           </motion.div>
 
           <motion.div
@@ -593,12 +590,24 @@ const Index = () => {
           >
             <h2 className="text-sm font-bold mb-2">NOTEIFY.UK</h2>
             <p className="text-xs font-bold mb-3">NOTES LIKE 1-UP 🍄</p>
-            <button 
-              className="text-xs font-bold"
-              onClick={() => handleRedirect('#')}
-            >
+            <Link href="https://noteify.uk" className="text-xs font-bold">
               NOTE IT! 🔥
-            </button>
+            </Link>
+          </motion.div>
+
+          <motion.div
+            className="project-box max-w-[220px] w-full"
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: false, amount: 0.1 }}
+            variants={fadeInOutVariant}
+          >
+            <h2 className="text-sm font-bold mb-2">SUPERTRAILHIKES</h2>
+            <p className="text-xs font-bold mb-3">HIKE LIKE A HERO 🏞️</p>
+            <Link href="https://supertrailhikes.com" className="text-xs font-bold">
+              HIKE IT! 🔥
+            </Link>
           </motion.div>
         </motion.div>
       </motion.section>
