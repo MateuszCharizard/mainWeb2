@@ -525,7 +525,7 @@ const Index = () => {
           initial="initial"
           whileHover="hover"
         >
-          <span>NEW MUSIC RELEASED - Out of luck</span>
+          <span>NEW MUSIC RELEASED - Im just him</span>
           <motion.button
             className="news-button home-button"
             onClick={() => handleRedirect('/')}
@@ -654,7 +654,7 @@ const Index = () => {
               className="rounded-lg" 
               width="100%" 
               height="120" 
-              src="https://www.bandlab.com/embed/?id=89061b4d-5046-f011-8f7d-6045bd381261" 
+              src="https://www.bandlab.com/embed/?id=829b44ba-4a7a-f011-b480-000d3aa44c65" 
               allowFullScreen
               style={{ maxWidth: '100%' }}
             ></iframe>
