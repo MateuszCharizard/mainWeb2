@@ -472,7 +472,7 @@ const Index = () => {
           initial="initial"
           whileHover="hover"
         >
-          <span>NEW MUSIC RELEASED - Out of luck</span>
+          <span>NEW MUSIC RELEASED - Im just him</span>
           <motion.button
             className="news-button"
             onClick={() => handleRedirect('/music')}
